@@ -2,7 +2,7 @@ package com.example.task2;
 
 public class ShapeFactory {
 
-    public HelloApplication.Shape createShape(int numberOfSides) {
+    public Shape createShape(int numberOfSides) {
         if (numberOfSides == 5) {
             return new Pentagon();
         } else if (numberOfSides == 4) {

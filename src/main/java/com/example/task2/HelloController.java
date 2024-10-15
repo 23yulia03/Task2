@@ -27,7 +27,7 @@ public class HelloController {
         }
 
         int numberOfSides = Integer.parseInt(value1.getText());
-        HelloApplication.Shape shape1 = shapeFactory.createShape(numberOfSides);
+        Shape shape1 = shapeFactory.createShape(numberOfSides);
 
         if (shape1 != null) {
             gr.clearRect(0, 0, canvas.getWidth(), canvas.getHeight()); // Очистка холста

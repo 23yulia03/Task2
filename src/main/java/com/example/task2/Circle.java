@@ -3,7 +3,7 @@ package com.example.task2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Circle implements HelloApplication.Shape {
+public class Circle implements Shape {
 
     @Override
     public void draw(GraphicsContext gr) {
