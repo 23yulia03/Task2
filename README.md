@@ -36,7 +36,7 @@
 - **FXML** для декларативного описания пользовательского интерфейса.
 
 ## Демонстрация работы программы
-[Рабочее окно программы](https://github.com/23yulia03/Task2/blob/main/img/screenshot.png)
+![Рабочее окно программы](https://github.com/23yulia03/Task2/blob/main/img/screenshot.png)
 
 ## Структура проекта
 
