@@ -3,7 +3,7 @@ package com.example.task2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Triangle implements Shape {
+public class Triangle extends Shape {
 
     @Override
     public void draw(GraphicsContext gr) {
