@@ -1,0 +1,65 @@
+@startuml
+class com.example.task2.ShapeFactory {
++ Shape createShape(int)
+}
+
+class com.example.task2.Circle {
++ void draw(GraphicsContext)
++ String descriptor()
+}
+
+class com.example.task2.HelloController {
+- Canvas canvas
+- TextField value1
+- ShapeFactory shapeFactory
++ void addPicture()
+- boolean checkWithRegExp(String)
+- void showAlert(String,String)
+}
+
+
+class com.example.task2.HelloApplication {
++ void start(Stage)
++ {static} void main(String[])
+}
+
+interface com.example.task2.Shape {
+~ void draw(GraphicsContext)
+~ String descriptor()
+}
+
+class com.example.task2.Line {
++ void draw(GraphicsContext)
++ String descriptor()
+}
+
+class com.example.task2.Pentagon {
++ void draw(GraphicsContext)
++ String descriptor()
+}
+
+class com.example.task2.Triangle {
++ void draw(GraphicsContext)
++ String descriptor()
+}
+
+class com.example.task2.Angle {
++ void draw(GraphicsContext)
++ String descriptor()
+}
+
+class com.example.task2.Square {
++ void draw(GraphicsContext)
++ String descriptor()
+}
+
+
+
+com.example.task2.Shape <|.. com.example.task2.Circle
+javafx.application.Application <|-- com.example.task2.HelloApplication
+com.example.task2.Shape <|.. com.example.task2.Line
+com.example.task2.Shape <|.. com.example.task2.Pentagon
+com.example.task2.Shape <|.. com.example.task2.Triangle
+com.example.task2.Shape <|.. com.example.task2.Angle
+com.example.task2.Shape <|.. com.example.task2.Square
+@enduml
