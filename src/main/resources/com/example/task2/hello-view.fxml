@@ -4,24 +4,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.task2.HelloController">
-    <!-- Верхняя часть с FlowPane и полем для ввода количества сторон -->
-    <top>
-        <VBox alignment="CENTER" spacing="10">
-            <!-- Первый FlowPane для описания фигур -->
-            <FlowPane alignment="CENTER" hgap="10.0" vgap="10.0">
-                <Label prefHeight="51.0" prefWidth="414.0" text="(0-круг, 1 - отрезок, 2 - угол, 3 - треугольник, 4 - квадрат, 5 - пятиугольник)" />
-            </FlowPane>
-            <!-- Второй FlowPane для поля ввода и кнопки -->
-            <FlowPane alignment="CENTER" hgap="10.0" prefHeight="38.0" prefWidth="600.0" vgap="10.0">
-                <Label text="Число сторон" />
-                <TextField fx:id="value1" prefWidth="50" />
-                <Button onAction="#addPicture" text="Нарисовать" />
-            </FlowPane>
-        </VBox>
-    </top>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="com.example.task2.HelloController">
+    <!-- Инструкция с доступными фигурами -->
+    <Label layoutX="20" layoutY="10" text="Доступные фигуры: Линия, Квадрат, Треугольник, Круг, Угол, Пятиугольник" />
 
-    <bottom>
-        <Canvas fx:id="canvas" height="400.0" width="600.0" BorderPane.alignment="CENTER" />
-    </bottom>
-</BorderPane>
+    <!-- Текстовое поле для ввода названия фигуры -->
+    <TextField fx:id="shapeInput" layoutX="20" layoutY="40" prefHeight="26.0" prefWidth="158.0" promptText="Введите название фигуры" />
+
+    <!-- Выбор цвета -->
+    <ColorPicker fx:id="colorPicker" layoutX="221.0" layoutY="40.0" />
+
+    <!-- Текстовое поле для ввода размера фигуры -->
+    <TextField fx:id="sizeInput" layoutX="20.0" layoutY="73.0" prefHeight="26.0" prefWidth="158.0" promptText="Введите размер фигуры" />
+
+    <!-- Кнопка для очистки -->
+    <Button layoutX="20.0" layoutY="109.0" onAction="#onClear" text="Очистить" />
+
+    <!-- Холст для рисования фигур -->
+    <Canvas fx:id="canvas" height="400" layoutX="20.0" layoutY="146.0" onMouseMoved="#onMouseMove" width="600" />
+</AnchorPane>
