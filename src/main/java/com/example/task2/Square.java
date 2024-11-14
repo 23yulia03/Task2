@@ -4,15 +4,26 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Square extends Shape {
+    private double side;
 
-    @Override
-    public void draw(GraphicsContext gr) {
-        gr.setFill(Color.BLUE);
-        gr.fillRect(100, 100, 150, 150); // Рисуем квадрат
+    public Square(Color color, double side) {
+        super(color);
+        this.side = side;
     }
 
     @Override
-    public String descriptor() {
-        return "Square";
+    public double area() {
+        return side * side;
+    }
+
+    @Override
+    public void draw(GraphicsContext gr) {
+        gr.setFill(color);
+        gr.fillRect(x, y, side, side);
+    }
+
+    @Override
+    public Shape clone() {
+        return new Square(color, side);
     }
 }

@@ -4,17 +4,28 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Angle extends Shape {
+    private double side;
 
-    @Override
-    public void draw(GraphicsContext gr) {
-        gr.setStroke(Color.GRAY);
-        gr.setLineWidth(10);
-        gr.strokeLine(50, 150, 300, 150); // Горизонтальная линия
-        gr.strokeLine(50, 150, 50, 300); // Вертикальная линия
+    public Angle(Color color, double side) {
+        super(color);
+        this.side = side;
     }
 
     @Override
-    public String descriptor() {
-        return "Angle";
+    public double area() {
+        return 0.5 * side * side; // Площадь прямого угла как половина квадрата
+    }
+
+    @Override
+    public void draw(GraphicsContext gr) {
+        gr.setStroke(color);  // Используем stroke, а не fill, чтобы не закрашивать угол
+        gr.setLineWidth(2);    // Устанавливаем толщину линии
+        gr.strokeLine(x, y, x + side, y);           // Линия от точки (x, y) вправо
+        gr.strokeLine(x, y, x, y - side);           // Линия вверх от точки (x, y)
+    }
+
+    @Override
+    public Shape clone() {
+        return new Angle(color, side);
     }
 }
