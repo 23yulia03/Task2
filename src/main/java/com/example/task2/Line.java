@@ -4,16 +4,26 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Line extends Shape {
+    private double length;
 
-    @Override
-    public void draw(GraphicsContext gr) {
-        gr.setStroke(Color.BLACK);
-        gr.setLineWidth(5);
-        gr.strokeLine(50, 150, 300, 150); // Рисуем отрезок
+    public Line(Color color, double length) {
+        super(color);
+        this.length = length;
     }
 
     @Override
-    public String descriptor() {
-        return "Line";
+    public double area() {
+        return 0; // Линия не имеет площади
+    }
+
+    @Override
+    public void draw(GraphicsContext gr) {
+        gr.setStroke(color);
+        gr.strokeLine(x, y, x + length, y);
+    }
+
+    @Override
+    public Shape clone() {
+        return new Line(color, length);
     }
 }
