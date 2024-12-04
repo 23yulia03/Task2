@@ -1,22 +1,24 @@
 package com.example.task2;
 
-public class ShapeFactory {
+import javafx.scene.paint.Color;
 
-    public Shape createShape(int numberOfSides) {
-        if (numberOfSides == 5) {
-            return new Pentagon();
-        } else if (numberOfSides == 4) {
-            return new Square();
-        } else if (numberOfSides == 3) {
-            return new Triangle();
-        } else if (numberOfSides == 2) {
-            return new Angle();
-        } else if (numberOfSides == 1) {
-            return new Line();
-        } else if (numberOfSides == 0) {
-            return new Circle();
-        } else {
-            return null; // В случае некорректного числа сторон
+public class ShapeFactory {
+    public Shape createShape(String shapeType, Color color, double... params) {
+        switch (shapeType.toLowerCase()) {
+            case "line":
+                return new Line(color, params[0]);
+            case "square":
+                return new Square(color, params[0]);
+            case "triangle":
+                return new Triangle(color, params[0], params[1]);
+            case "circle":
+                return new Circle(color, params[0]);
+            case "angle":
+                return new Angle(color, params[0]);
+            case "pentagon":
+                return new Pentagon(color, params[0]);
+            default:
+                throw new IllegalArgumentException("Неверный тип фигуры: " + shapeType);
         }
     }
 }

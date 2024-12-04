@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.task2.HelloController">
-    <!-- Верхняя часть с FlowPane и полем для ввода количества сторон -->
-    <top>
-        <VBox alignment="CENTER" spacing="10">
-            <!-- Первый FlowPane для описания фигур -->
-            <FlowPane alignment="CENTER" hgap="10.0" vgap="10.0">
-                <Label prefHeight="51.0" prefWidth="414.0" text="(0-круг, 1 - отрезок, 2 - угол, 3 - треугольник, 4 - квадрат, 5 - пятиугольник)" />
-            </FlowPane>
-            <!-- Второй FlowPane для поля ввода и кнопки -->
-            <FlowPane alignment="CENTER" hgap="10.0" prefHeight="38.0" prefWidth="600.0" vgap="10.0">
-                <Label text="Число сторон" />
-                <TextField fx:id="value1" prefWidth="50" />
-                <Button onAction="#addPicture" text="Нарисовать" />
-            </FlowPane>
-        </VBox>
-    </top>
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.task2.HelloController">
+    <Label layoutX="20" layoutY="10" text="Доступные фигуры:" />
 
-    <bottom>
-        <Canvas fx:id="canvas" height="400.0" width="600.0" BorderPane.alignment="CENTER" />
-    </bottom>
-</BorderPane>
+    <!-- Выбор фигуры из списка -->
+    <ListView fx:id="shapeListView" layoutX="20" layoutY="40" prefHeight="100" prefWidth="434.0">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Линия" />
+                <String fx:value="Квадрат" />
+                <String fx:value="Треугольник" />
+                <String fx:value="Круг" />
+                <String fx:value="Угол" />
+                <String fx:value="Пятиугольник" />
+            </FXCollections>
+        </items>
+    </ListView>
+
+    <ColorPicker fx:id="colorPicker" layoutX="470.0" layoutY="40.0" />
+
+    <TextField fx:id="sizeInput" layoutX="20.0" layoutY="150.0" prefHeight="26.0" prefWidth="158.0" promptText="Введите размер фигуры" />
+
+    <Button layoutX="20.0" layoutY="186.0" onAction="#onClear" text="Очистить" />
+
+    <Button layoutX="100.0" layoutY="186.0" onAction="#onUndo" text="Отменить" />
+
+    <Canvas fx:id="canvas" height="400" layoutX="20.0" layoutY="222.0" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" width="600" />
+</AnchorPane>
