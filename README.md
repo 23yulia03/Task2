@@ -69,6 +69,14 @@
 
 ---
 
+## Демонстрация работы программы
+![Рабочее окно программы](https://github.com/23yulia03/Task2/blob/task3-hranitel-memento/src/screenshots/img.png)
+
+## Архитектура
+![Вывод на экран Диаграммы Классов](https://github.com/23yulia03/Task2/blob/task3-hranitel-memento/src/screenshots/ClassDiagram-task3.png)
+
+---
+
 ### Структура проекта
 
 ```plaintext
