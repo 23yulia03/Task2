@@ -4,18 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.Stack;
-import java.util.PriorityQueue;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class HelloController {
     @FXML
@@ -26,6 +19,14 @@ public class HelloController {
     private TextField sizeInput;
     @FXML
     private ColorPicker colorPicker;
+    @FXML
+    private ColorPicker strokeColorPicker;
+    @FXML
+    private Slider strokeWidthSlider;
+    @FXML
+    private ComboBox<String> fillStyleComboBox;
+    @FXML
+    private ComboBox<String> animationComboBox;
 
     private ShapeFactory shapeFactory = new ShapeFactory();
     private ArrayList<Shape> shapes = new ArrayList<>();
@@ -41,6 +42,12 @@ public class HelloController {
         shapeListView.setItems(FXCollections.observableArrayList(
                 "Линия", "Квадрат", "Треугольник", "Круг", "Угол", "Пятиугольник"
         ));
+        fillStyleComboBox.setItems(FXCollections.observableArrayList(
+                "Сплошной", "Пунктир", "Штриховка"
+        ));
+        animationComboBox.setItems(FXCollections.observableArrayList(
+                "Нет", "Мерцание", "Постепенное появление"
+        ));
     }
 
     // Метод для очистки холста
@@ -54,20 +61,20 @@ public class HelloController {
     }
 
     // Создаёт фигуру на основе выбранного названия
-    private Shape createShapeByName(String shapeName, Color color, double size) {
+    private Shape createShapeByName(String shapeName, Color fillColor, Color strokeColor, double strokeWidth, String fillStyle, String animationType, double size) {
         switch (shapeName) {
             case "Линия":
-                return shapeFactory.createShape("Line", color, size);
+                return shapeFactory.createShape("Line", fillColor, strokeColor, strokeWidth, fillStyle, animationType, size);
             case "Квадрат":
-                return shapeFactory.createShape("Square", color, size);
+                return shapeFactory.createShape("Square", fillColor, strokeColor, strokeWidth, fillStyle, animationType, size);
             case "Треугольник":
-                return shapeFactory.createShape("Triangle", color, size, size);
+                return shapeFactory.createShape("Triangle", fillColor, strokeColor, strokeWidth, fillStyle, animationType, size, size);
             case "Круг":
-                return shapeFactory.createShape("Circle", color, size);
+                return shapeFactory.createShape("Circle", fillColor, strokeColor, strokeWidth, fillStyle, animationType, size);
             case "Угол":
-                return shapeFactory.createShape("Angle", color, size);
+                return shapeFactory.createShape("Angle", fillColor, strokeColor, strokeWidth, fillStyle, animationType, size);
             case "Пятиугольник":
-                return shapeFactory.createShape("Pentagon", color, size);
+                return shapeFactory.createShape("Pentagon", fillColor, strokeColor, strokeWidth, fillStyle, animationType, size);
             default:
                 return null;
         }
@@ -101,12 +108,16 @@ public class HelloController {
     private void onMouseDragged(MouseEvent event) {
         if (isDrawing) {
             String shapeName = shapeListView.getSelectionModel().getSelectedItem(); // Получаем выбранное название фигуры
-            Color color = colorPicker.getValue(); // Получаем цвет
+            Color fillColor = colorPicker.getValue(); // Получаем цвет заливки
+            Color strokeColor = strokeColorPicker.getValue(); // Получаем цвет контура
+            double strokeWidth = strokeWidthSlider.getValue(); // Получаем толщину контура
+            String fillStyle = fillStyleComboBox.getSelectionModel().getSelectedItem(); // Получаем стиль заливки
+            String animationType = animationComboBox.getSelectionModel().getSelectedItem(); // Получаем тип анимации
             double size = Double.parseDouble(sizeInput.getText()); // Получаем размер фигуры
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
             if (currentShape == null) {
-                currentShape = createShapeByName(shapeName, color, size);
+                currentShape = createShapeByName(shapeName, fillColor, strokeColor, strokeWidth, fillStyle, animationType, size);
             }
 
             if (currentShape != null) {
@@ -123,7 +134,7 @@ public class HelloController {
                 shapeCountMap.put(shapeName, shapeCountMap.getOrDefault(shapeName, 0) + 1);
 
                 // Создаем новую фигуру для следующего рисования
-                currentShape = createShapeByName(shapeName, color, size);
+                currentShape = createShapeByName(shapeName, fillColor, strokeColor, strokeWidth, fillStyle, animationType, size);
             } else {
                 showAlert("Ошибка", "Неверное название фигуры.");
             }
@@ -134,6 +145,19 @@ public class HelloController {
     public void onUndo() {
         if (!undoStack.isEmpty()) {
             Shape lastShape = undoStack.pop();
+            if (lastShape instanceof Line) {
+                ((Line) lastShape).stopAnimation();
+            } else if (lastShape instanceof Square) {
+                ((Square) lastShape).stopAnimation();
+            } else if (lastShape instanceof Triangle) {
+                ((Triangle) lastShape).stopAnimation();
+            } else if (lastShape instanceof Circle) {
+                ((Circle) lastShape).stopAnimation();
+            } else if (lastShape instanceof Angle) {
+                ((Angle) lastShape).stopAnimation();
+            } else if (lastShape instanceof Pentagon) {
+                ((Pentagon) lastShape).stopAnimation();
+            }
             shapes.remove(lastShape);
             redrawCanvas();
         }

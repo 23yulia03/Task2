@@ -5,9 +5,10 @@ import javafx.scene.paint.Color;
 
 public class Square extends Shape {
     private double side;
+    private ShapeAnimation animation;
 
-    public Square(Color color, double side) {
-        super(color);
+    public Square(Color fillColor, Color strokeColor, double strokeWidth, String fillStyle, String animationType, double side) {
+        super(fillColor, strokeColor, strokeWidth, fillStyle, animationType);
         this.side = side;
     }
 
@@ -18,12 +19,42 @@ public class Square extends Shape {
 
     @Override
     public void draw(GraphicsContext gr) {
-        gr.setFill(color);
+        gr.setFill(fillColor);
+        gr.setStroke(strokeColor);
+        gr.setLineWidth(strokeWidth);
+
+        if ("Пунктир".equals(fillStyle)) {
+            gr.setLineDashes(5);
+        } else {
+            gr.setLineDashes(0);
+        }
+
+        if (animation == null && !"Нет".equals(animationType)) {
+            animation = new ShapeAnimation(gr, this, animationType);
+        }
+
         gr.fillRect(x, y, side, side);
+        gr.strokeRect(x, y, side, side);
     }
 
     @Override
     public Shape clone() {
-        return new Square(color, side);
+        return new Square(fillColor, strokeColor, strokeWidth, fillStyle, animationType, side);
+    }
+
+    public void stopAnimation() {
+        if (animation != null) {
+            animation.stop();
+        }
+    }
+
+    @Override
+    public void setFillColor(Color color) {
+
+    }
+
+    @Override
+    public void setStrokeColor(Color color) {
+        this.strokeColor = color;
     }
 }

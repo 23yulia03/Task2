@@ -4,13 +4,21 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public abstract class Shape {
-    protected Color color;
+    protected Color fillColor;
+    protected Color strokeColor;
+    protected double strokeWidth;
+    protected String fillStyle;
+    protected String animationType;
     protected double x, y;
     protected double width, height;
 
     // Конструктор
-    public Shape(Color color) {
-        this.color = color;
+    public Shape(Color fillColor, Color strokeColor, double strokeWidth, String fillStyle, String animationType) {
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
+        this.fillStyle = fillStyle;
+        this.animationType = animationType;
     }
 
     public abstract double area();
@@ -41,10 +49,21 @@ public abstract class Shape {
     }
 
     // Метод для получения цвета
-    public Color getColor() {
-        return color;
+    public Color getFillColor() {
+        return fillColor;
+    }
+
+    public Color getStrokeColor() {
+        return strokeColor;
     }
 
     // Метод для клонирования фигуры
     public abstract Shape clone();
+
+    public void stopAnimation() {
+    }
+
+    public abstract void setFillColor(Color color);
+
+    public abstract void setStrokeColor(Color color);
 }

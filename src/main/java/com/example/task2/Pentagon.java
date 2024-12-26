@@ -5,9 +5,10 @@ import javafx.scene.paint.Color;
 
 public class Pentagon extends Shape {
     private double side;
+    private ShapeAnimation animation;
 
-    public Pentagon(Color color, double side) {
-        super(color);
+    public Pentagon(Color fillColor, Color strokeColor, double strokeWidth, String fillStyle, String animationType, double side) {
+        super(fillColor, strokeColor, strokeWidth, fillStyle, animationType);
         this.side = side;
     }
 
@@ -26,12 +27,42 @@ public class Pentagon extends Shape {
             xPoints[i] = x + side * Math.cos(angle * i);
             yPoints[i] = y + side * Math.sin(angle * i);
         }
-        gr.setFill(color);
+        gr.setFill(fillColor);
+        gr.setStroke(strokeColor);
+        gr.setLineWidth(strokeWidth);
+
+        if ("Пунктир".equals(fillStyle)) {
+            gr.setLineDashes(5);
+        } else {
+            gr.setLineDashes(0);
+        }
+
+        if (animation == null && !"Нет".equals(animationType)) {
+            animation = new ShapeAnimation(gr, this, animationType);
+        }
+
         gr.fillPolygon(xPoints, yPoints, 5);
+        gr.strokePolygon(xPoints, yPoints, 5);
     }
 
     @Override
     public Shape clone() {
-        return new Pentagon(color, side);
+        return new Pentagon(fillColor, strokeColor, strokeWidth, fillStyle, animationType, side);
+    }
+
+    public void stopAnimation() {
+        if (animation != null) {
+            animation.stop();
+        }
+    }
+
+    @Override
+    public void setFillColor(Color color) {
+
+    }
+
+    @Override
+    public void setStrokeColor(Color color) {
+        this.strokeColor = color;
     }
 }
