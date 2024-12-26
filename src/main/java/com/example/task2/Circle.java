@@ -1,29 +1,18 @@
 package com.example.task2;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 public class Circle extends Shape {
-    private double radius;
+    private static final double RADIUS = 30;
 
-    public Circle(Color color, double radius) {
-        super(color);
-        this.radius = radius;
+    @Override
+    public void draw(GraphicsContext gc, double x, double y) {
+        gc.setFill(color);
+        gc.fillOval(x - RADIUS, y - RADIUS, 2 * RADIUS, 2 * RADIUS);
     }
 
     @Override
-    public double area() {
-        return Math.PI * radius * radius;
-    }
-
-    @Override
-    public void draw(GraphicsContext gr) {
-        gr.setFill(color);
-        gr.fillOval(x - radius, y - radius, radius * 2, radius * 2);
-    }
-
-    @Override
-    public Shape clone() {
-        return new Circle(color, radius);
+    public String toString() {
+        return "Круг";
     }
 }
