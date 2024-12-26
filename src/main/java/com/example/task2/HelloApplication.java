@@ -5,14 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);  // Увеличим размер окна для работы с фигурами
-        stage.setTitle("Figure Drawer");
+        Scene scene = new Scene(fxmlLoader.load(), 500, 400);
+        stage.setTitle("Рисование фигур");
         stage.setScene(scene);
         stage.show();
     }

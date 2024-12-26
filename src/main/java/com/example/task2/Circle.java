@@ -12,18 +12,14 @@ public class Circle extends Shape {
     }
 
     @Override
-    public double area() {
+    double area() {
         return Math.PI * radius * radius;
     }
 
     @Override
-    public void draw(GraphicsContext gr) {
-        gr.setFill(color);
-        gr.fillOval(x - radius, y - radius, radius * 2, radius * 2);
-    }
-
-    @Override
-    public Shape clone() {
-        return new Circle(color, radius);
+    public void draw(GraphicsContext gc) {
+        gc.setFill(color);
+        gc.fillOval(x, y, radius * 2, radius * 2);
+        System.out.println("Circle color is " + color + " and area is: " + area());
     }
 }

@@ -12,18 +12,14 @@ public class Square extends Shape {
     }
 
     @Override
-    public double area() {
+    double area() {
         return side * side;
     }
 
     @Override
-    public void draw(GraphicsContext gr) {
-        gr.setFill(color);
-        gr.fillRect(x, y, side, side);
-    }
-
-    @Override
-    public Shape clone() {
-        return new Square(color, side);
+    public void draw(GraphicsContext gc) {
+        gc.setFill(color);
+        gc.fillRect(x, y, side, side);
+        System.out.println("Square color is " + color + " and area is: " + area());
     }
 }
