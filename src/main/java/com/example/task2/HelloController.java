@@ -144,7 +144,7 @@ public class HelloController {
         }
     }
 
-    // Метод отображения предыдущего изображения в слайд-шоу
+    //Метод отображения предыдущего изображения в слайд-шоу
     @FXML
     public void preview() {
         Image image = (Image) iter.preview();

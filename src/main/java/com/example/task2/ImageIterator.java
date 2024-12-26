@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageIterator implements Iterator {
+public class ImageIterator implements Iterator { //Итератор
     private int current = 0;
     private String basePath;
     private List<File> imageFiles;

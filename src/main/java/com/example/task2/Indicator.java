@@ -2,7 +2,7 @@ package com.example.task2;
 
 import javafx.scene.layout.Pane;
 
-public class Indicator {
+public class Indicator { //Индикатор
     private Pane panel = new Pane();
 
     public void add(Pane pane) {

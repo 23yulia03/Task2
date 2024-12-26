@@ -8,7 +8,7 @@ public class ConcreteIterator implements Iterator {
     private List<Image> images;
     private int currentIndex = 0;
 
-    // Конструктор, принимающий список изображений
+    //Конструктор, принимающий список изображений
     public ConcreteIterator(List<Image> images) {
         this.images = images;
     }

@@ -9,7 +9,7 @@ import java.util.List;
 public class ConcreteAggregate implements Aggregate {
     private List<Image> images;
 
-    // Конструктор, загружающий изображения из папки
+    //Конструктор, загружающий изображения из папки
     public ConcreteAggregate(String basePath) {
         this.images = new ArrayList<>();
         loadImages(basePath);

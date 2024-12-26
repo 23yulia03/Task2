@@ -1,6 +1,6 @@
 package com.example.task2;
 
-// Интерфейс для итератора
+//Интерфейс для итератора
 public interface Iterator {
     boolean hasNext();
     Object next();
