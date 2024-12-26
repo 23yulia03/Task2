@@ -88,10 +88,10 @@
 - Легко расширяется добавлением новых фигур.
 
 ## Демонстрация работы программы
-![Рабочее окно программы](https://github.com/23yulia03/Task2/blob/develop/img/screenshot.png)
+![Рабочее окно программы](https://github.com/23yulia03/Task2/blob/task5-builder/src/screenshots/img.png)
 
 ## Архитектура
-![Вывод на экран Диаграммы Классов](https://github.com/23yulia03/Task2/blob/develop/ClassDiagram-task2.png)
+![Вывод на экран Диаграммы Классов](https://github.com/23yulia03/Task2/blob/task5-builder/src/screenshots/ClassDiagram-task5.png)
 
 ## Структура проекта
 

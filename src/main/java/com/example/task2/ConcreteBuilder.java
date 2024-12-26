@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 
 public class ConcreteBuilder implements Builder {
 
-    com.example.task5.Indicator indicator = new com.example.task5.Indicator();
+    com.example.task2.Indicator indicator = new com.example.task2.Indicator();
     private float start, stop;
 
     @Override
