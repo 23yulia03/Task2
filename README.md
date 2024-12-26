@@ -91,7 +91,7 @@
 ![Рабочее окно программы](https://github.com/23yulia03/Task2/blob/task8-decorator/src/screenshots/img.png)
 
 ## Архитектура
-![Вывод на экран Диаграммы Классов](https://github.com/23yulia03/Task2/blob/task8-decorator/src/screenshots/ClassDiagram-task8.png.)
+![Вывод на экран Диаграммы Классов](https://github.com/23yulia03/Task2/blob/task8-decorator/src/screenshots/ClassDiagram-task8.png)
 
 ## Структура проекта
 
