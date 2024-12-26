@@ -1,150 +1,198 @@
 package com.example.task2;
 
-import javafx.collections.FXCollections;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
+import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.Stack;
-import java.util.PriorityQueue;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
 
 public class HelloController {
-    @FXML
-    private Canvas canvas;
-    @FXML
-    private ListView<String> shapeListView;
-    @FXML
-    private TextField sizeInput;
-    @FXML
-    private ColorPicker colorPicker;
 
-    private ShapeFactory shapeFactory = new ShapeFactory();
-    private ArrayList<Shape> shapes = new ArrayList<>();
-    private Stack<Shape> undoStack = new Stack<>();
-    private PriorityQueue<String> shapeQueue = new PriorityQueue<>();
-    private Map<String, Integer> shapeCountMap = new HashMap<>();
+    @FXML
+    private Pane indicatorPane;
+    @FXML
+    private Label startField, stopField, measureField;
+    @FXML
+    private Button startStopButton, applyDelayButton;
+    @FXML
+    private ImageView screen;
+    @FXML
+    private TextField delayField;
+    @FXML
+    private Button chooseFolderButton;
 
-    private boolean isDrawing = false;
-    private Shape currentShape = null;
+    private Aggregate aggregate;
+    private Iterator iter;
+    private Timeline time = new Timeline();
+    private boolean isPlaying = false;
+    private int currentImageIndex = 0;
+    private Director director = new Director();
 
-    // Инициализация ListView
     public void initialize() {
-        shapeListView.setItems(FXCollections.observableArrayList(
-                "Линия", "Квадрат", "Треугольник", "Круг", "Угол", "Пятиугольник"
-        ));
+        aggregate = new ConcreteAggregate("src/main/resources/img");
+        iter = aggregate.getIterator();
+        time.setCycleCount(Timeline.INDEFINITE);
+        updateTimeline(1000);
+        screen.setPreserveRatio(false);
+
+        startField.setText("1");
+        updateStopField();
+        updateMeasureField();
+
     }
 
-    // Метод для очистки холста
-    public void onClear() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        shapes.clear();
-        undoStack.clear();
-        shapeQueue.clear();
-        shapeCountMap.clear();
-    }
 
-    // Создаёт фигуру на основе выбранного названия
-    private Shape createShapeByName(String shapeName, Color color, double size) {
-        switch (shapeName) {
-            case "Линия":
-                return shapeFactory.createShape("Line", color, size);
-            case "Квадрат":
-                return shapeFactory.createShape("Square", color, size);
-            case "Треугольник":
-                return shapeFactory.createShape("Triangle", color, size, size);
-            case "Круг":
-                return shapeFactory.createShape("Circle", color, size);
-            case "Угол":
-                return shapeFactory.createShape("Angle", color, size);
-            case "Пятиугольник":
-                return shapeFactory.createShape("Pentagon", color, size);
-            default:
-                return null;
+    // Обработка применения задержки, введенной пользователем
+    @FXML
+    public void applyDelay() {
+        if (delayField != null && !delayField.getText().isEmpty()) {
+            try {
+                int newDelay = Integer.parseInt(delayField.getText());
+                updateTimeline(newDelay);
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Пожалуйста, введите действительный номер для подтверждения задержки.");
+                alert.showAndWait();
+            }
         }
     }
 
-    // Показывает уведомление об ошибке
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    // Обновление временной шкалы с новой задержкой
+    private void updateTimeline(int delayMillis) {
+        time.stop();
+        time.getKeyFrames().clear();
+        time.getKeyFrames().add(new KeyFrame(Duration.millis(delayMillis), new EvHandler()));
+        if (isPlaying) {
+            time.play();
+        }
     }
 
-    // Обработчик для нажатия мыши
-    @FXML
-    private void onMousePressed(MouseEvent event) {
-        isDrawing = true;
-        onMouseDragged(event);
-    }
-
-    // Обработчик для отпускания мыши
-    @FXML
-    private void onMouseReleased(MouseEvent event) {
-        isDrawing = false;
-        currentShape = null;
-    }
-
-    // Обработчик для движения мыши при зажатой клавише
-    @FXML
-    private void onMouseDragged(MouseEvent event) {
-        if (isDrawing) {
-            String shapeName = shapeListView.getSelectionModel().getSelectedItem(); // Получаем выбранное название фигуры
-            Color color = colorPicker.getValue(); // Получаем цвет
-            double size = Double.parseDouble(sizeInput.getText()); // Получаем размер фигуры
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-
-            if (currentShape == null) {
-                currentShape = createShapeByName(shapeName, color, size);
-            }
-
-            if (currentShape != null) {
-                // Устанавливаем позицию фигуры на место курсора
-                currentShape.setPosition(event.getX(), event.getY());
-                currentShape.draw(gc);
-
-                // Добавляем фигуру в список и стек для отмены
-                shapes.add(currentShape);
-                undoStack.push(currentShape);
-
-                // Обновляем статистику
-                shapeQueue.add(shapeName);
-                shapeCountMap.put(shapeName, shapeCountMap.getOrDefault(shapeName, 0) + 1);
-
-                // Создаем новую фигуру для следующего рисования
-                currentShape = createShapeByName(shapeName, color, size);
+    // Обработчик событий для обработки переходов между слайд-шоу
+    private class EvHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent event) {
+            Image image = (Image) iter.next();
+            if (image != null) {
+                screen.setImage(image);
+                currentImageIndex++;
+                updateMeasureField();
             } else {
-                showAlert("Ошибка", "Неверное название фигуры.");
+                iter.reset();
+                currentImageIndex = 0;
+                updateMeasureField();
+                image = (Image) iter.next();
+                if (image != null) {
+                    screen.setImage(image);
+                }
             }
         }
     }
 
-    // Метод для отмены последнего действия
-    public void onUndo() {
-        if (!undoStack.isEmpty()) {
-            Shape lastShape = undoStack.pop();
-            shapes.remove(lastShape);
-            redrawCanvas();
+    // Метод переключения анимации между воспроизведением и паузой
+    @FXML
+    public void toggleAnimation() {
+        float start = Float.parseFloat(startField.getText());
+        float stop = Float.parseFloat(stopField.getText());
+        float measure = Float.parseFloat(measureField.getText());
+
+        indicatorPane.getChildren().clear();
+
+        Builder builder = new ConcreteBuilder();
+        director.constructIndicator(builder, start, stop, measure);
+
+        Indicator indicator = builder.build();
+        indicator.show(indicatorPane);
+
+        if (isPlaying) {
+            time.pause();
+            startStopButton.setText("⏹");
+            indicatorPane.setVisible(false);
+        } else {
+            startStopButton.setText("▶");
+            time.play();
+            indicatorPane.setVisible(true);
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // Метод отображения следующего изображения в слайд-шоу
+    @FXML
+    public void next() {
+        Image image = (Image) iter.next();
+        if (image != null) {
+            screen.setImage(image);
+            currentImageIndex++;
+            updateMeasureField();
+        } else {
+            iter.reset();
+            currentImageIndex = 0;
+            updateMeasureField();
+            image = (Image) iter.next();
+            if (image != null) {
+                screen.setImage(image);
+            }
         }
     }
 
-    // Перерисовываем холст с учетом удаленных фигур
-    private void redrawCanvas() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (Shape shape : shapes) {
-            shape.draw(gc);
+    // Метод отображения предыдущего изображения в слайд-шоу
+    @FXML
+    public void preview() {
+        Image image = (Image) iter.preview();
+        if (image != null) {
+            screen.setImage(image);
+            currentImageIndex--;
+            updateMeasureField();
         }
+    }
+
+    // Метод выбора папки с изображениями
+    @FXML
+    public void chooseFolder() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(chooseFolderButton.getScene().getWindow());
+
+        if (selectedDirectory != null) {
+            aggregate = new ConcreteAggregate(selectedDirectory.getAbsolutePath());
+            iter = aggregate.getIterator();
+            currentImageIndex = 0;
+            updateStopField();
+            updateMeasureField();
+            Image image = (Image) iter.next();
+            if (image != null) {
+                screen.setImage(image);
+            }
+        }
+    }
+
+    // Метод обновления поля "стоп" с указанием общего количества изображений
+    private void updateStopField() {
+        int imageCount = aggregate.getImageCount();
+        stopField.setText(String.valueOf(imageCount));
+    }
+
+    // Метод обновления поля измерения и положения индикатора
+    private void updateMeasureField() {
+        measureField.setText(String.valueOf(currentImageIndex + 1));
+        float measure = Float.parseFloat(measureField.getText());
+        float start = Float.parseFloat(startField.getText());
+        float stop = Float.parseFloat(stopField.getText());
+
+        indicatorPane.getChildren().clear();
+
+        Builder builder = new ConcreteBuilder();
+        director.constructIndicator(builder, start, stop, measure);
+
+        Indicator indicator = builder.build();
+        indicator.show(indicatorPane);
     }
 }
