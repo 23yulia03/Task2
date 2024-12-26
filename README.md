@@ -90,6 +90,15 @@
 
 ---
 
+
+## Демонстрация работы программы
+![Рабочее окно программы](https://github.com/23yulia03/Task2/blob/task4-iterator/src/screenshots/img.png)
+
+## Архитектура
+![Вывод на экран Диаграммы Классов](https://github.com/23yulia03/Task2/blob/task3-iterator/src/screenshots/ClassDiagram-task4.png)
+
+---
+
 ### Структура проекта
 
 ```bash
