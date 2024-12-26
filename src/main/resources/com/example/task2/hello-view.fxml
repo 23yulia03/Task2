@@ -1,35 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.task2.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+    <!-- Заголовок -->
+    <Label text="Индикатор" />
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.task2.HelloController">
-    <Label layoutX="20" layoutY="10" text="Доступные фигуры:" />
+    <!-- Панель для отображения индикатора -->
+    <Pane fx:id="indicatorPane" xmlns:fx="http://javafx.com/fxml" visible="true" prefWidth="400" prefHeight="100"/>
 
-    <!-- Выбор фигуры из списка -->
-    <ListView fx:id="shapeListView" layoutX="20" layoutY="40" prefHeight="100" prefWidth="434.0">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Линия" />
-                <String fx:value="Квадрат" />
-                <String fx:value="Треугольник" />
-                <String fx:value="Круг" />
-                <String fx:value="Угол" />
-                <String fx:value="Пятиугольник" />
-            </FXCollections>
-        </items>
-    </ListView>
+    <!-- Контроль для начала, конца и текущего положения индикатора -->
+    <HBox spacing="10.0" alignment="CENTER">
+        <Label text="Начало:"/>
+        <Label fx:id="startField" text="1"/>
+        <Label text="Конец:"/>
+        <Label fx:id="stopField" text="10"/>
+        <Label text="Номер:"/>
+        <Label fx:id="measureField" text="1"/>
+    </HBox>
 
-    <ColorPicker fx:id="colorPicker" layoutX="470.0" layoutY="40.0" />
+    <!-- Кнопки управления индикатором -->
+    <HBox spacing="10.0" alignment="CENTER">
+        <Button fx:id="startButton" text="Старт" onAction="#startAnimation"/>
+        <Button fx:id="pauseButton" text="Пауза" onAction="#pauseAnimation" disable="true"/>
+        <Button fx:id="stopButton" text="Стоп" onAction="#stopAnimation" disable="true"/>
+    </HBox>
 
-    <TextField fx:id="sizeInput" layoutX="20.0" layoutY="150.0" prefHeight="26.0" prefWidth="158.0" promptText="Введите размер фигуры" />
+    <!-- Блок для установки задержки -->
+    <HBox spacing="10.0" alignment="CENTER">
+        <Label text="Задержка (мс):"/>
+        <TextField fx:id="delayField" promptText="Введите задержку"/>
+        <Button fx:id="applyDelayButton" onAction="#applyDelay" style="-fx-background-color: pink;" text="Применить задержку"/>
+    </HBox>
 
-    <Button layoutX="20.0" layoutY="186.0" onAction="#onClear" text="Очистить" />
+</VBox>
 
-    <Button layoutX="100.0" layoutY="186.0" onAction="#onUndo" text="Отменить" />
-
-    <Canvas fx:id="canvas" height="400" layoutX="20.0" layoutY="222.0" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" width="600" />
-</AnchorPane>

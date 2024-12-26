@@ -11,8 +11,8 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);  // Увеличим размер окна для работы с фигурами
-        stage.setTitle("Figure Drawer");
+        Scene scene = new Scene(fxmlLoader.load(), 720, 640);
+        stage.setTitle("Индикатор");
         stage.setScene(scene);
         stage.show();
     }
