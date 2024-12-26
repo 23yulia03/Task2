@@ -1,150 +1,75 @@
 package com.example.task2;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
-
-import java.util.ArrayList;
-import java.util.Stack;
-import java.util.PriorityQueue;
-import java.util.HashMap;
-import java.util.Map;
+import javafx.event.ActionEvent;
+import javafx.scene.control.ToggleGroup;
 
 public class HelloController {
-    @FXML
-    private Canvas canvas;
-    @FXML
-    private ListView<String> shapeListView;
-    @FXML
-    private TextField sizeInput;
-    @FXML
-    private ColorPicker colorPicker;
 
-    private ShapeFactory shapeFactory = new ShapeFactory();
-    private ArrayList<Shape> shapes = new ArrayList<>();
-    private Stack<Shape> undoStack = new Stack<>();
-    private PriorityQueue<String> shapeQueue = new PriorityQueue<>();
-    private Map<String, Integer> shapeCountMap = new HashMap<>();
+    @FXML
+    private TextField summaField;
 
-    private boolean isDrawing = false;
-    private Shape currentShape = null;
+    @FXML
+    private Label bigTipResult;
 
-    // Инициализация ListView
+    @FXML
+    private Label mediumTipResult2;
+
+    @FXML
+    private Label smallTipResult;
+
+    @FXML
+    private RadioButton radio9;
+
+    @FXML
+    private RadioButton radio10;
+
+    private ToggleGroup tipGroup;
+
+    private Procent procent = new Procent();
+
+    @FXML
     public void initialize() {
-        shapeListView.setItems(FXCollections.observableArrayList(
-                "Линия", "Квадрат", "Треугольник", "Круг", "Угол", "Пятиугольник"
-        ));
+        // Инициализация группы для радиокнопок
+        tipGroup = new ToggleGroup();
+        radio9.setToggleGroup(tipGroup);
+        radio10.setToggleGroup(tipGroup);
+
+        radio9.setSelected(true);
     }
 
-    // Метод для очистки холста
-    public void onClear() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        shapes.clear();
-        undoStack.clear();
-        shapeQueue.clear();
-        shapeCountMap.clear();
-    }
-
-    // Создаёт фигуру на основе выбранного названия
-    private Shape createShapeByName(String shapeName, Color color, double size) {
-        switch (shapeName) {
-            case "Линия":
-                return shapeFactory.createShape("Line", color, size);
-            case "Квадрат":
-                return shapeFactory.createShape("Square", color, size);
-            case "Треугольник":
-                return shapeFactory.createShape("Triangle", color, size, size);
-            case "Круг":
-                return shapeFactory.createShape("Circle", color, size);
-            case "Угол":
-                return shapeFactory.createShape("Angle", color, size);
-            case "Пятиугольник":
-                return shapeFactory.createShape("Pentagon", color, size);
-            default:
-                return null;
-        }
-    }
-
-    // Показывает уведомление об ошибке
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    // Обработчик для нажатия мыши
+    // Метод для расчета малых чаевых (3%)
     @FXML
-    private void onMousePressed(MouseEvent event) {
-        isDrawing = true;
-        onMouseDragged(event);
+    void m_mal_ch(ActionEvent event) {
+        double sum = Double.parseDouble(summaField.getText());
+        double result = procent.countSumTrunc(sum, 3);
+        smallTipResult.setText(String.format("Сумма: %.0f р.", result));
     }
 
-    // Обработчик для отпускания мыши
+    // Метод для расчета чаевых (9% или 10%)
     @FXML
-    private void onMouseReleased(MouseEvent event) {
-        isDrawing = false;
-        currentShape = null;
+    void m_sred_ch(ActionEvent event) {
+        double sum = Double.parseDouble(summaField.getText());
+        double result;
+
+        // Проверяем, какая радиокнопка выбрана
+        if (radio9.isSelected()) {
+            result = procent.countSumTrunc(sum, 9);
+        } else {
+            result = procent.countSumTrunc(sum, 10);
+        }
+
+        mediumTipResult2.setText(String.format("Сумма: %.0f р.", result));
     }
 
-    // Обработчик для движения мыши при зажатой клавише
+    // Метод для расчета больших чаевых (15%)
     @FXML
-    private void onMouseDragged(MouseEvent event) {
-        if (isDrawing) {
-            String shapeName = shapeListView.getSelectionModel().getSelectedItem(); // Получаем выбранное название фигуры
-            Color color = colorPicker.getValue(); // Получаем цвет
-            double size = Double.parseDouble(sizeInput.getText()); // Получаем размер фигуры
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-
-            if (currentShape == null) {
-                currentShape = createShapeByName(shapeName, color, size);
-            }
-
-            if (currentShape != null) {
-                // Устанавливаем позицию фигуры на место курсора
-                currentShape.setPosition(event.getX(), event.getY());
-                currentShape.draw(gc);
-
-                // Добавляем фигуру в список и стек для отмены
-                shapes.add(currentShape);
-                undoStack.push(currentShape);
-
-                // Обновляем статистику
-                shapeQueue.add(shapeName);
-                shapeCountMap.put(shapeName, shapeCountMap.getOrDefault(shapeName, 0) + 1);
-
-                // Создаем новую фигуру для следующего рисования
-                currentShape = createShapeByName(shapeName, color, size);
-            } else {
-                showAlert("Ошибка", "Неверное название фигуры.");
-            }
-        }
-    }
-
-    // Метод для отмены последнего действия
-    public void onUndo() {
-        if (!undoStack.isEmpty()) {
-            Shape lastShape = undoStack.pop();
-            shapes.remove(lastShape);
-            redrawCanvas();
-        }
-    }
-
-    // Перерисовываем холст с учетом удаленных фигур
-    private void redrawCanvas() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (Shape shape : shapes) {
-            shape.draw(gc);
-        }
+    void m_big_ch(ActionEvent event) {
+        double sum = Double.parseDouble(summaField.getText());
+        double result = procent.countSumTrunc(sum, 15);
+        bigTipResult.setText(String.format("Сумма: %.0f р.", result));
     }
 }

@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.task2.HelloController">
-    <Label layoutX="20" layoutY="10" text="Доступные фигуры:" />
-
-    <!-- Выбор фигуры из списка -->
-    <ListView fx:id="shapeListView" layoutX="20" layoutY="40" prefHeight="100" prefWidth="434.0">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Линия" />
-                <String fx:value="Квадрат" />
-                <String fx:value="Треугольник" />
-                <String fx:value="Круг" />
-                <String fx:value="Угол" />
-                <String fx:value="Пятиугольник" />
-            </FXCollections>
-        </items>
-    </ListView>
-
-    <ColorPicker fx:id="colorPicker" layoutX="470.0" layoutY="40.0" />
-
-    <TextField fx:id="sizeInput" layoutX="20.0" layoutY="150.0" prefHeight="26.0" prefWidth="158.0" promptText="Введите размер фигуры" />
-
-    <Button layoutX="20.0" layoutY="186.0" onAction="#onClear" text="Очистить" />
-
-    <Button layoutX="100.0" layoutY="186.0" onAction="#onUndo" text="Отменить" />
-
-    <Canvas fx:id="canvas" height="400" layoutX="20.0" layoutY="222.0" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" width="600" />
-</AnchorPane>
+<VBox alignment="CENTER" prefHeight="387.0" prefWidth="560.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.task2.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <FlowPane alignment="CENTER" prefHeight="65.0" prefWidth="187.0">
+        <children>
+            <Label prefHeight="18.0" prefWidth="84.0" text="Сумма в чеке:" textFill="#3e04dc" />
+            <TextField fx:id="summaField" prefHeight="26.0" prefWidth="150.0" />
+        </children>
+    </FlowPane>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="258.0">
+        <children>
+            <Button fx:id="smallTipButton" mnemonicParsing="false" onAction="#m_mal_ch" prefHeight="26.0" prefWidth="92.0" style="-fx-background-color: pink;" text="Чаевые 3%" />
+            <Label fx:id="smallTipResult" alignment="TOP_CENTER" prefHeight="18.0" prefWidth="120.0" text="Расчёт" />
+        </children>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="69.0" prefWidth="265.0">
+        <children>
+            <RadioButton fx:id="radio9" mnemonicParsing="false" prefHeight="18.0" prefWidth="63.0" text="9%" />
+            <RadioButton fx:id="radio10" mnemonicParsing="false" prefHeight="18.0" prefWidth="71.0" text="10%" />
+            <Button fx:id="mediumTipButton2" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#m_sred_ch" prefHeight="26.0" prefWidth="92.0" style="-fx-background-color: orange;" text="Посчитать" />
+            <Label fx:id="mediumTipResult2" alignment="TOP_CENTER" prefHeight="18.0" prefWidth="120.0" text="Расчёт" />
+        </children>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="258.0">
+        <children>
+            <Button fx:id="bigTipButton" mnemonicParsing="false" onAction="#m_big_ch" prefHeight="26.0" prefWidth="92.0" style="-fx-background-color: yellow;" text="Чаевые 15%" />
+            <Label fx:id="bigTipResult" alignment="TOP_CENTER" prefHeight="18.0" prefWidth="120.0" text="Расчёт" textAlignment="CENTER" />
+        </children>
+    </HBox>
+</VBox>
