@@ -8,43 +8,39 @@ public abstract class Shape {
     protected double x, y;
     protected double width, height;
 
-    // Конструктор
     public Shape(Color color) {
         this.color = color;
     }
 
     public abstract double area();
+    public abstract void draw(GraphicsContext gr);
 
-    // Абстрактный метод для рисования
-    abstract void draw(GraphicsContext gr);
-
-    // Метод для рисования в заданных координатах
-    public void draw(GraphicsContext gr, double x, double y) {
-        this.x = x;
-        this.y = y;
-        draw(gr);
-    }
-
-    // Метод для задания позиции
+    // Установка позиции фигуры
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    // Метод для получения ширины (если нужно для правильного размещения фигур в ряд)
+    // Получение ширины фигуры (например, для линий)
     public double getWidth() {
         return width;
     }
 
-    public double getHeight() {
-        return height;
+    // Установка ширины фигуры
+    public void setWidth(double width) {
+        this.width = width;
     }
 
-    // Метод для получения цвета
+    // Получение цвета фигуры
     public Color getColor() {
         return color;
     }
 
-    // Метод для клонирования фигуры
+    // Установка цвета фигуры
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    // Абстрактный метод для клонирования фигуры
     public abstract Shape clone();
 }
