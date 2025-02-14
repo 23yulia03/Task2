@@ -25,6 +25,11 @@ public class Angle extends Shape {
     }
 
     @Override
+    public boolean contains(double x, double y) {
+        return x >= this.x && x <= this.x + side && y <= this.y && y >= this.y - side;
+    }
+
+    @Override
     public Shape clone() {
         return new Angle(color, side);
     }

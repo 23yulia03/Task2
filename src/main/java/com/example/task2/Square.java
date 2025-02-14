@@ -4,26 +4,36 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Square extends Shape {
-    private double side;
+    private double size;
 
-    public Square(Color color, double side) {
+    public Square(Color color, double size) {
         super(color);
-        this.side = side;
+        this.size = size;
     }
 
     @Override
     public double area() {
-        return side * side;
+        return size * size;
     }
 
     @Override
-    public void draw(GraphicsContext gr) {
-        gr.setFill(color);
-        gr.fillRect(x, y, side, side);
+    public void draw(GraphicsContext gc) {
+        gc.setFill(color);
+        gc.fillRect(x, y, size, size); // Исправлено: gr -> gc
     }
 
     @Override
     public Shape clone() {
-        return new Square(color, side);
+        return new Square(color, size);
+    }
+
+    @Override
+    public boolean contains(double x, double y) {
+        return x >= this.x && x <= this.x + size && y >= this.y && y <= this.y + size;
+    }
+
+    // Добавляем метод getSize()
+    public double getSize() {
+        return size;
     }
 }

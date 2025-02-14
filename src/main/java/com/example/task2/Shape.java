@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 public abstract class Shape {
     protected Color color;
     protected double x, y;
-    protected double width, height;
+    protected double width; // Добавляем поле width
 
     public Shape(Color color) {
         this.color = color;
@@ -15,32 +15,36 @@ public abstract class Shape {
     public abstract double area();
     public abstract void draw(GraphicsContext gr);
 
-    // Установка позиции фигуры
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    // Получение ширины фигуры (например, для линий)
-    public double getWidth() {
-        return width;
+    public double getX() {
+        return x;
     }
 
-    // Установка ширины фигуры
-    public void setWidth(double width) {
-        this.width = width;
+    public double getY() {
+        return y;
     }
 
-    // Получение цвета фигуры
     public Color getColor() {
         return color;
     }
 
-    // Установка цвета фигуры
     public void setColor(Color color) {
         this.color = color;
     }
 
-    // Абстрактный метод для клонирования фигуры
+    public double getWidth() {
+        return width; // Возвращаем ширину
+    }
+
+    public void setWidth(double width) {
+        this.width = width; // Устанавливаем ширину
+    }
+
     public abstract Shape clone();
+
+    public abstract boolean contains(double x, double y);
 }
