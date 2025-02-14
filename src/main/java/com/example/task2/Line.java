@@ -23,6 +23,11 @@ public class Line extends Shape {
     }
 
     @Override
+    public boolean contains(double x, double y) {
+        return x >= this.x && x <= this.x + length && y >= this.y - 2 && y <= this.y + 2;
+    }
+
+    @Override
     public Shape clone() {
         return new Line(color, length);
     }

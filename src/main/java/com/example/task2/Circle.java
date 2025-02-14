@@ -17,13 +17,26 @@ public class Circle extends Shape {
     }
 
     @Override
-    public void draw(GraphicsContext gr) {
-        gr.setFill(color);
-        gr.fillOval(x - radius, y - radius, radius * 2, radius * 2);
+    public void draw(GraphicsContext gc) {
+        gc.setFill(color);
+        gc.fillOval(x, y, radius * 2, radius * 2);
     }
 
     @Override
     public Shape clone() {
         return new Circle(color, radius);
+    }
+
+    @Override
+    public boolean contains(double x, double y) {
+        double centerX = this.x + radius;
+        double centerY = this.y + radius;
+        double distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+        return distance <= radius;
+    }
+
+    // Добавляем метод getRadius()
+    public double getRadius() {
+        return radius;
     }
 }

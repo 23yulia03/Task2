@@ -31,6 +31,22 @@ public class Pentagon extends Shape {
     }
 
     @Override
+    public boolean contains(double x, double y) {
+        double angle = Math.toRadians(72);
+        double[] xPoints = new double[5];
+        double[] yPoints = new double[5];
+        for (int i = 0; i < 5; i++) {
+            xPoints[i] = this.x + side * Math.cos(angle * i);
+            yPoints[i] = this.y + side * Math.sin(angle * i);
+        }
+        java.awt.Polygon polygon = new java.awt.Polygon();
+        for (int i = 0; i < 5; i++) {
+            polygon.addPoint((int) xPoints[i], (int) yPoints[i]);
+        }
+        return polygon.contains(x, y);
+    }
+
+    @Override
     public Shape clone() {
         return new Pentagon(color, side);
     }
