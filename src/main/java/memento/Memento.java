@@ -1,6 +1,7 @@
-package model;
+package memento;
 
 import javafx.scene.paint.Color;
+import model.Shape;
 
 public class Memento {
 

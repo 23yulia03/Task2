@@ -8,4 +8,8 @@ module com.example.task2 {
     exports com.example.task2;
     exports model;
     opens model to javafx.fxml;
+    exports factory;
+    opens factory to javafx.fxml;
+    exports memento;
+    opens memento to javafx.fxml;
 }
