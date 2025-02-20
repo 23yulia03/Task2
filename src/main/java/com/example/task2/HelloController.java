@@ -60,17 +60,17 @@ public class HelloController {
     private Shape createShapeByName(String shapeName, Color color, double size) {
         switch (shapeName) {
             case "Линия":
-                return (Shape) shapeFactory.createShape("Line", color, size);
+                return shapeFactory.createShape("Line", color, size);
             case "Квадрат":
-                return (Shape) shapeFactory.createShape("Square", color, size);
+                return shapeFactory.createShape("Square", color, size);
             case "Треугольник":
-                return (Shape) shapeFactory.createShape("Triangle", color, size, size);
+                return shapeFactory.createShape("Triangle", color, size, size);
             case "Круг":
-                return (Shape) shapeFactory.createShape("Circle", color, size);
+                return shapeFactory.createShape("Circle", color, size);
             case "Угол":
-                return (Shape) shapeFactory.createShape("Angle", color, size);
+                return shapeFactory.createShape("Angle", color, size);
             case "Пятиугольник":
-                return (Shape) shapeFactory.createShape("Pentagon", color, size);
+                return shapeFactory.createShape("Pentagon", color, size);
             default:
                 return null;
         }
