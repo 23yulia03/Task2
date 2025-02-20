@@ -1,10 +1,14 @@
 package com.example.task2;
 
+import model.ShapeFactory;
+import model.Shape;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -56,17 +60,17 @@ public class HelloController {
     private Shape createShapeByName(String shapeName, Color color, double size) {
         switch (shapeName) {
             case "Линия":
-                return shapeFactory.createShape("Line", color, size);
+                return (Shape) shapeFactory.createShape("Line", color, size);
             case "Квадрат":
-                return shapeFactory.createShape("Square", color, size);
+                return (Shape) shapeFactory.createShape("Square", color, size);
             case "Треугольник":
-                return shapeFactory.createShape("Triangle", color, size, size);
+                return (Shape) shapeFactory.createShape("Triangle", color, size, size);
             case "Круг":
-                return shapeFactory.createShape("Circle", color, size);
+                return (Shape) shapeFactory.createShape("Circle", color, size);
             case "Угол":
-                return shapeFactory.createShape("Angle", color, size);
+                return (Shape) shapeFactory.createShape("Angle", color, size);
             case "Пятиугольник":
-                return shapeFactory.createShape("Pentagon", color, size);
+                return (Shape) shapeFactory.createShape("Pentagon", color, size);
             default:
                 return null;
         }
@@ -117,7 +121,7 @@ public class HelloController {
             // Отмечаем фигуры, которые попадают в выделенную область
             selectedShapes.clear();
             for (Shape shape : shapes) {
-                if (shape.x >= x && shape.x <= x + width && shape.y >= y && shape.y <= y + height) {
+                if (shape.getX() >= x && shape.getX() <= x + width && shape.getY() >= y && shape.getY() <= y + height) {
                     selectedShapes.add(shape);
                 }
             }

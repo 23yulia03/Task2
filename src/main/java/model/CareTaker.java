@@ -1,4 +1,4 @@
-package com.example.task2;
+package model;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
