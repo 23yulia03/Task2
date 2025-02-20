@@ -1,6 +1,6 @@
 package com.example.task2;
 
-import factory.ShapeFactory;
+import model.ShapeFactory;
 import model.Shape;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

@@ -1,7 +1,6 @@
-package factory;
+package model;
 
 import javafx.scene.paint.Color;
-import model.*;
 
 public class ShapeFactory {
     public Shape createShape(String shapeType, Color color, double... params) {

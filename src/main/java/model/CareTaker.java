@@ -1,4 +1,4 @@
-package memento;
+package model;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
