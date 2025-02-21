@@ -1,3 +1,6 @@
+/**
+ * Класс для создания и рисования треугольника
+ */
 package model;
 
 import javafx.scene.canvas.GraphicsContext;

@@ -1,3 +1,6 @@
+/**
+ * Класс Memento, который хранит состояние фигуры (например, ширину и цвет) для восстановления.
+ */
 package model;
 
 import javafx.scene.paint.Color;

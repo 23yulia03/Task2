@@ -1,13 +1,13 @@
-package model;
-
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
 /**
  * Абстрактный класс, представляющий базовый шаблон для различных фигур.
  * Класс предоставляет общие методы для работы с цветом, позицией и размерами фигур,
  * а также абстрактные методы для вычисления площади и отрисовки фигуры.
  */
+package model;
+
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 public abstract class Shape {
     protected Color color; // Цвет фигуры
     protected double x, y; // Координаты позиции фигуры

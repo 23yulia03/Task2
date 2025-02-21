@@ -1,3 +1,6 @@
+/**
+ * Класс для создания и рисования круга
+ */
 package model;
 
 import javafx.scene.canvas.GraphicsContext;

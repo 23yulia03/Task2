@@ -1,3 +1,6 @@
+/**
+ * Класс ShapeFactory, отвечающий за создание фигур на основе типа и параметров.
+ */
 package model;
 
 import javafx.scene.paint.Color;
