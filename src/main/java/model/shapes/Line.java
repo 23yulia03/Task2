@@ -26,6 +26,11 @@ public class Line extends Shape {
     }
 
     @Override
+    public String descriptor() {
+        return "линия";
+    }
+
+    @Override
     public boolean contains(double x, double y) {
         return x >= this.x && x <= this.x + length && y >= this.y - 2 && y <= this.y + 2;
     }

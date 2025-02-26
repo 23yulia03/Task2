@@ -8,7 +8,7 @@ package model.shapes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public abstract class Shape {
+public abstract class Shape implements Cloneable {
     protected Color color; // Цвет фигуры
     protected double x, y; // Координаты позиции фигуры
     protected double width; // Ширина фигуры
@@ -103,6 +103,9 @@ public abstract class Shape {
     public void setWidth(double width) {
         this.width = width; // Устанавливаем ширину
     }
+
+    // Описание группы
+    public abstract String descriptor();
 
     /**
      * Создает копию текущей фигуры.

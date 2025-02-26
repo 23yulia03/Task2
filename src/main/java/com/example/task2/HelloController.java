@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import model.shapes.ShapeGroup;
 
 import java.util.*;
 
@@ -40,7 +41,7 @@ public class HelloController {
     private boolean isDragging = false; // флаг для перетаскивания
     private Shape currentShape = null;
     private Rectangle selectionRect = null; // прямоугольник выделения
-    private Set<Shape> selectedShapes = new HashSet<>(); // выделенные фигуры
+    private ShapeGroup selectedShapes = new ShapeGroup(); // выделенные фигуры (используем ShapeGroup)
     private double dragStartX, dragStartY; // Начальные координаты перетаскивания
 
     // Инициализация ListView
@@ -57,7 +58,7 @@ public class HelloController {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         shapes.clear();
         undoStack.clear();
-        selectedShapes.clear();
+        selectedShapes.clear(); // Очистка выделенных фигур
     }
 
     // Создаёт фигуру на основе выбранного названия
@@ -94,7 +95,7 @@ public class HelloController {
     private void onMousePressed(MouseEvent event) {
         if (isSelecting) {
             // Проверяем, нажали ли на выделенную фигуру
-            for (Shape shape : selectedShapes) {
+            for (Shape shape : selectedShapes.getShapes()) {
                 if (shape.contains(event.getX(), event.getY())) {
                     isDragging = true;
                     dragStartX = event.getX();
@@ -123,10 +124,10 @@ public class HelloController {
             double height = selectionRect.getHeight();
 
             // Отмечаем фигуры, которые попадают в выделенную область
-            selectedShapes.clear();
+            selectedShapes.clear(); // Очищаем выделение перед новым выбором
             for (Shape shape : shapes) {
                 if (shape.getX() >= x && shape.getX() <= x + width && shape.getY() >= y && shape.getY() <= y + height) {
-                    selectedShapes.add(shape);
+                    selectedShapes.addShape(shape); // Добавляем в выделенные
                 }
             }
         } else {
@@ -144,7 +145,7 @@ public class HelloController {
             double offsetY = event.getY() - dragStartY;
 
             // Перемещаем все выделенные фигуры
-            for (Shape shape : selectedShapes) {
+            for (Shape shape : selectedShapes.getShapes()) {
                 shape.setPosition(shape.getX() + offsetX, shape.getY() + offsetY);
             }
 
@@ -244,22 +245,22 @@ public class HelloController {
     // Изменение цвета выбранных фигур
     @FXML
     private void onChangeColor() {
-        Color newColor = colorPicker.getValue();
+        if (selectedShapes.isEmpty()) {
+            showAlert("Ошибка", "Нет выделенных фигур для изменения цвета.");
+            return;
+        }
 
-        // Создаем список для хранения старых цветов и фигур
+        Color newColor = colorPicker.getValue();
         Map<Shape, Color> oldColors = new HashMap<>();
 
         // Для каждой выделенной фигуры сохраняем старый цвет и изменяем на новый
-        for (Shape shape : selectedShapes) {
+        for (Shape shape : selectedShapes.getShapes()) {
             oldColors.put(shape, shape.getColor()); // Сохраняем старый цвет
             shape.setColor(newColor); // Устанавливаем новый цвет
         }
 
-        // Добавляем действие изменения цвета в стек отмены
-        if (!oldColors.isEmpty()) {
-            undoStack.push(new UndoAction(oldColors, UndoAction.Type.COLOR_CHANGE));
-        }
-
+        undoStack.push(new UndoAction(oldColors, UndoAction.Type.COLOR_CHANGE));
+        selectedShapes.clear(); // Очищаем выделение после изменения цвета
         redrawCanvas(); // Обновляем холст с новым цветом
     }
 

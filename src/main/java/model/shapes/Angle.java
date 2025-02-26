@@ -28,6 +28,11 @@ public class Angle extends Shape {
     }
 
     @Override
+    public String descriptor() {
+        return "угол";
+    }
+
+    @Override
     public boolean contains(double x, double y) {
         return x >= this.x && x <= this.x + side && y <= this.y && y >= this.y - side;
     }

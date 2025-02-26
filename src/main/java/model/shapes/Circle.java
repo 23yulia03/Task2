@@ -26,6 +26,11 @@ public class Circle extends Shape {
     }
 
     @Override
+    public String descriptor() {
+        return "круг";
+    }
+
+    @Override
     public Shape clone() {
         return new Circle(color, radius);
     }

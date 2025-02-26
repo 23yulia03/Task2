@@ -32,6 +32,11 @@ public class Triangle extends Shape {
     }
 
     @Override
+    public String descriptor() {
+        return "треугольник";
+    }
+
+    @Override
     public Shape clone() {
         return new Triangle(color, base, height);
     }

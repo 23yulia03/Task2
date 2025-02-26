@@ -26,6 +26,11 @@ public class Square extends Shape {
     }
 
     @Override
+    public String descriptor() {
+        return "квадрат";
+    }
+
+    @Override
     public Shape clone() {
         return new Square(color, size);
     }

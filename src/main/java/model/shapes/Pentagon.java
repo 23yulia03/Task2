@@ -34,6 +34,11 @@ public class Pentagon extends Shape {
     }
 
     @Override
+    public String descriptor() {
+        return "пятиугольник";
+    }
+
+    @Override
     public boolean contains(double x, double y) {
         double angle = Math.toRadians(72);
         double[] xPoints = new double[5];
