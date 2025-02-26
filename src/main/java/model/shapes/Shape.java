@@ -3,7 +3,7 @@
  * Класс предоставляет общие методы для работы с цветом, позицией и размерами фигур,
  * а также абстрактные методы для вычисления площади и отрисовки фигуры.
  */
-package model;
+package model.shapes;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

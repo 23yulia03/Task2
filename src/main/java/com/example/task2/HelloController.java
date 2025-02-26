@@ -4,8 +4,8 @@
  */
 package com.example.task2;
 
-import model.ShapeFactory;
-import model.Shape;
+import model.fabrica.ShapeFactory;
+import model.shapes.Shape;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;

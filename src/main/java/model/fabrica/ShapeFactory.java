@@ -1,9 +1,10 @@
 /**
  * Класс ShapeFactory, отвечающий за создание фигур на основе типа и параметров.
  */
-package model;
+package model.fabrica;
 
 import javafx.scene.paint.Color;
+import model.shapes.*;
 
 public class ShapeFactory {
     public Shape createShape(String shapeType, Color color, double... params) {

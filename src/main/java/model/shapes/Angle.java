@@ -1,7 +1,7 @@
 /**
  * Класс для создания и рисования угла
  */
-package model;
+package model.shapes;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

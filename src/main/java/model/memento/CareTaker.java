@@ -2,7 +2,7 @@
  * Класс CareTaker, который управляет состояниями объектов (Memento)
  * с возможностью сохранения и восстановления состояния.
  */
-package model;
+package model.memento;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

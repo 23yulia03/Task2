@@ -1,9 +1,10 @@
 /**
  * Класс Memento, который хранит состояние фигуры (например, ширину и цвет) для восстановления.
  */
-package model;
+package model.memento;
 
 import javafx.scene.paint.Color;
+import model.shapes.Shape;
 
 public class Memento {
 
