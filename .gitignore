@@ -5,3 +5,6 @@
 !src/
 !README.md
 !pom.xml
+!*.png       # Разрешаем все PNG в корне
+!*.jpg
+!*.jpeg
